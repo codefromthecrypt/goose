@@ -17,9 +17,9 @@ format:
     echo "[error]: unable to find uvx"
     exit 1
   fi
-  eval "$UVX_PATH ruff packages/exchange format ."
+  eval "$UVX_PATH ruff format packages/exchange"
   eval "$UVX_PATH ruff format ."
-  eval "$UVX_PATH ruff packages/exchange check . --fix"
+  eval "$UVX_PATH ruff check packages/exchange --fix"
   eval "$UVX_PATH ruff check . --fix"
 
 
