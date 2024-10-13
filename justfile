@@ -2,9 +2,11 @@ default:
   @just --list --unsorted
 
 test *FLAGS:
+  (cd packages/exchange; uv run pytest tests -m "not integration" {{FLAGS}})
   uv run pytest tests -m "not integration" {{FLAGS}}
 
 integration *FLAGS:
+  (cd packages/exchange; uv run pytest tests -m integration {{FLAGS}})
   uv run pytest tests -m integration {{FLAGS}}
 
 format:
@@ -15,12 +17,15 @@ format:
     echo "[error]: unable to find uvx"
     exit 1
   fi
+  eval "$UVX_PATH ruff packages/exchange format ."
   eval "$UVX_PATH ruff format ."
+  eval "$UVX_PATH ruff packages/exchange check . --fix"
   eval "$UVX_PATH ruff check . --fix"
 
 
 coverage *FLAGS:
-  uv run coverage run -m pytest tests -m "not integration" {{FLAGS}}
+  uv run coverage run --source=packages/exchange -m pytest tests -m "not integration" {{FLAGS}}
+  uv run coverage run --source=. -m pytest tests -m "not integration" {{FLAGS}}
   uv run coverage report
   uv run coverage lcov -o lcov.info
 

@@ -125,3 +125,9 @@ docs/docs/reference
 
 # uv lock file
 uv.lock
+
+# PyCharm
+.idea/
+
+# Coverage report
+lcov.info
